@@ -1,7 +1,9 @@
-### list of LeetCode problems that I have solved for pandas
+## LeetCode Problems Solved (Pandas)
 
-| No. | ProblemID | Difficulty | Problem Name |
-|-----------|------------|--------------|
+**Total Solved: 13 problems** | **Difficulty: All Easy**
+
+| # | Problem ID | Difficulty | Problem Name |
+|---|:----------:|:----------:|:-------------|
 | 1 | 175 | Easy | [Combine Two Tables](https://leetcode.com/problems/combine-two-tables/) |
 | 2 | 181 | Easy | [Employees Earning More Than Their Managers](https://leetcode.com/problems/employees-earning-more-than-their-managers/) |
 | 3 | 182 | Easy | [Duplicate Emails](https://leetcode.com/problems/duplicate-emails/) |
