@@ -29,6 +29,12 @@
 | 23 | 1076 | Easy | [Project Employees II](https://leetcode.com/problems/project-employees-ii/) |
 | 24 | 1082 | Easy | [Sales Analysis I](https://leetcode.com/problems/sales-analysis-i/) |
 | 25 | 1083 | Easy | [Sales Analysis II](https://leetcode.com/problems/sales-analysis-ii/) |
+| 26 | 1084 | Easy | [Sales Analysis III](https://leetcode.com/problems/sales-analysis-iii/) |
+| 27 | 1141 | Easy | [User Activity for the Past 30 Days I](https://leetcode.com/problems/user-activity-for-the-past-30-days-i/) |
+| 28 | 1142 | Easy | [User Activity for the Past 30 Days II](https://leetcode.com/problems/user-activity-for-the-past-30-days-ii/) |
+| 29 | 1173 | Easy | [Immediate Food Delivery I](https://leetcode.com/problems/immediate-food-delivery-i/) |
+| 30 | 1179 | Easy | [Reformat Department Table](https://leetcode.com/problems/reformat-department-table/) |
+
 ### note:
 #### 1. how to aggregate data in pandas?
 - use `groupby()` to group the data by a column
@@ -76,6 +82,9 @@ df['new_column'] = df['column'].shift(-1) # shift the value of the "column" colu
 #### 7. how to compare Timedelta in pandas?
 ```python
 weather["record_date"] - weather["previous_date"] == pd.Timedelta(days=1) # compare the value of the "record_date" column to the "previous_date" column (get the difference)    
+# convert date column to datetime in pandas
+weather["record_date"] = pd.to_datetime(weather["record_date"])
+weather["previous_date"] = pd.to_datetime(weather["previous_date"])
 ```
 
 #### 8. how drop duplicates in pandas?
@@ -101,4 +110,48 @@ df['column'] = df['column'].astype('datetime') # convert the data type of the "c
 ```python
 df[df['column'].isin(df['other_column'])] # filter the data by multiple values
 # isin() is used to check if the value of the "column" column is in the "other_column" column
+```
+
+#### 11. how to use Series.diff() in pandas?
+```python
+df['column'].diff() # get the difference between the current value and the previous value
+
+Use diff() 
+s = pd.Series([1, 4, 7, 10])
+s.diff()
+
+# 0    NaN      # No previous element
+# 1    3.0      # 4 - 1 = 3
+# 2    3.0      # 7 - 4 = 3
+# 3    3.0      # 10 - 7 = 3
+```
+
+#### 12. how to use pivot() and pivot_table() in pandas?
+```python
+df = pd.DataFrame({
+    "id": [1, 1, 2],
+    "month": ["Jan", "Feb", "Jan"],
+    "revenue": [100, 200, 150]
+})
+
+# Long format:
+#    id  month  revenue
+# 0   1    Jan      100
+# 1   1    Feb      200
+# 2   2    Jan      150
+
+df.pivot(index="id", columns="month", values="revenue") (no duplicates for columns)
+
+# Wide format:
+# month  Feb    Jan
+# id              
+# 1      200.0  100.0
+# 2      NaN    150.0
+
+
+df.pivot_table(values='value', index='index', columns='column', aggfunc='mean') # pivot the data by the "index" column and the "column" column
+# values is used to specify the column to pivot
+# index is used to specify the column to pivot on
+# columns is used to specify the column to pivot on
+# aggfunc is used to specify the aggregation function
 ```
