@@ -17,7 +17,18 @@
 | 11 | 586 | Easy | [Customer Placing the Largest Number of Orders](https://leetcode.com/problems/customer-placing-the-largest-number-of-orders/) |
 | 12 | 595 | Easy | [Big Countries](https://leetcode.com/problems/big-countries/) |
 | 13 | 596 | Easy | [Classes More Than 5 Students](https://leetcode.com/problems/classes-more-than-5-students/) |
-
+| 14 | 597 | Easy | [Friend Requests I: Overall Acceptance Rate](https://leetcode.com/problems/friend-requests-i-overall-acceptance-rate/) |
+| 15 | 603 | Easy | [Consecutive Numbers](https://leetcode.com/problems/consecutive-numbers/) |
+| 16 | 610 | Easy | [Triangle Judgement](https://leetcode.com/problems/triangle-judgement/) |
+| 17 | 613 | Easy | [Shortest Distance in a Line](https://leetcode.com/problems/shortest-distance-in-a-line/) |
+| 18 | 619 | Easy | [Big Countries](https://leetcode.com/problems/big-countries/) |
+| 19 | 620 | Easy | [Not Boring Movies](https://leetcode.com/problems/not-boring-movies/) |
+| 20 | 1068 | Easy | [Product Sales Analysis III](https://leetcode.com/problems/product-sales-analysis-iii/) |
+| 21 | 1069 | Easy | [Product Sales Analysis IV](https://leetcode.com/problems/product-sales-analysis-iv/) |
+| 22 | 1075 | Easy | [Project Employees I](https://leetcode.com/problems/project-employees-i/) |
+| 23 | 1076 | Easy | [Project Employees II](https://leetcode.com/problems/project-employees-ii/) |
+| 24 | 1082 | Easy | [Sales Analysis I](https://leetcode.com/problems/sales-analysis-i/) |
+| 25 | 1083 | Easy | [Sales Analysis II](https://leetcode.com/problems/sales-analysis-ii/) |
 ### note:
 #### 1. how to aggregate data in pandas?
 - use `groupby()` to group the data by a column
@@ -91,4 +102,3 @@ df['column'] = df['column'].astype('datetime') # convert the data type of the "c
 df[df['column'].isin(df['other_column'])] # filter the data by multiple values
 # isin() is used to check if the value of the "column" column is in the "other_column" column
 ```
-
