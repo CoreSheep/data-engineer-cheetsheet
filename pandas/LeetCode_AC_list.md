@@ -36,6 +36,7 @@
 | 30 | 1179 | Easy | [Reformat Department Table](https://leetcode.com/problems/reformat-department-table/) |
 | 31 | 1211 | Easy | [Queries Quality and Percentage](https://leetcode.com/problems/queries-quality-and-percentage/) |
 | 32 | 1241 | Easy | [Number of Comments per Post](https://leetcode.com/problems/number-of-comments-per-post/) |
+| 33 | 1280 | Easy | [Students and Examinations](https://leetcode.com/problems/students-and-examinations/) |
 
 ### note:
 #### 1. how to aggregate data in pandas?
@@ -301,4 +302,70 @@ df.apply(round2)
 # 1.00
 # 2.00
 # 3.00
+```
+
+#### 19. how to use merge on cross table? (fully connected table)
+```python
+merged = students.merge(subjects, how="cross").sort_values("student_id")
+# how="cross" is used to create a cross table
+# sort_values("student_id") is used to sort the data by the "student_id" column
+
+# students is like this:
+# student_id  student_name
+# 1           John
+# 2           Jane
+# 3           Jim
+
+# subjects is like this:
+#   subject_name
+#         Math
+#         Science
+#         History
+
+# merged is like this:
+
+#  student_id  student_name   subject_name
+#           1           John         Math
+#           1           John        Science
+#           1           John        History
+#           2           Jane        Math
+#           2           Jane        Science
+#           2           Jane        History
+#           3           Jim         Math
+#           3           Jim         Science
+#           3           Jim         History
+```
+
+#### 20. how to use pivot_table() on cross table?
+```python
+pivot_table = pd.pivot_table(merged, values="student_id", index="student_name", columns="subject_name", aggfunc="count")
+# values is used to specify the column to pivot on
+# index is used to specify the column to pivot on
+# columns is used to specify the column to pivot on
+# aggfunc is used to specify the aggregation function
+```
+
+#### 21. how to use apply() in pandas?
+```python
+
+def weather_type(countries: pd.DataFrame, weather: pd.DataFrame) -> pd.DataFrame:
+    filtered = weather.merge(countries, on="country_id", how="left")
+    filtered = filtered[(filtered["day"] >= "2019-11-01") & (filtered["day"] <= "2019-11-30")]
+    weathers = filtered.groupby("country_name").agg(
+        weather_degree_avg=("weather_state", "mean")
+    ).reset_index()
+    def weather_convert(avg_degree):
+        if avg_degree <= 15:
+            return "Cold"
+        elif avg_degree >= 25:
+            return "Hot"
+        else:
+            return "Warm" 
+    weathers["weather_type"] = weathers["weather_degree_avg"].apply(weather_convert)
+    return weathers[["country_name", "weather_type"]].sort_values("country_name")
+
+# apply() is used to apply a function to a column or a dataframe
+# weather_convert is a function that converts the average degree to a weather type
+# weather_type is a new column that contains the weather type
+# country_name is the column to sort the data by
 ```
