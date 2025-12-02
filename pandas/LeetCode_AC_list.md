@@ -34,6 +34,8 @@
 | 28 | 1142 | Easy | [User Activity for the Past 30 Days II](https://leetcode.com/problems/user-activity-for-the-past-30-days-ii/) |
 | 29 | 1173 | Easy | [Immediate Food Delivery I](https://leetcode.com/problems/immediate-food-delivery-i/) |
 | 30 | 1179 | Easy | [Reformat Department Table](https://leetcode.com/problems/reformat-department-table/) |
+| 31 | 1211 | Easy | [Queries Quality and Percentage](https://leetcode.com/problems/queries-quality-and-percentage/) |
+| 32 | 1241 | Easy | [Number of Comments per Post](https://leetcode.com/problems/number-of-comments-per-post/) |
 
 ### note:
 #### 1. how to aggregate data in pandas?
@@ -45,6 +47,29 @@
 df.groupby('column').agg({'other_column': 'mean'}) # mean, median, sum, size(all values including null values), count(all non-null values), max, min, first(the first value), last(the last value)
 df.groupby("class").size().reset_index(name='count') # reset_index() is used to convert the Series to a DataFrame
 df["count"].max() # get the maximum value of the "count" column, it is not a dataframe but a value
+
+# multiple aggregations and custom aggregation functions with rename for the columns
+def queries_stats(queries: pd.DataFrame) -> pd.DataFrame:
+    queries["quality_ratio"] = queries["rating"] / queries["position"]
+    queries["is_poor"] = queries["rating"] < 3
+
+    filtered = queries.groupby("query_name").agg(
+        quality=("quality_ratio", "mean"),
+        poor_query_percentage=("is_poor", lambda x: x.sum() / x.count() * 100)
+    ).round(2)
+
+    return filtered.reset_index()
+
+# Use lambda function to create a new column with the percentage of poor queries
+# x.sum() is used to count the number of True values in the "is_poor" column
+# x.count() is used to count the number of values in the "is_poor" column
+# lambda x: x.sum() / x.count() * 100 is used to calculate the percentage of poor queries
+# round(2) is used to round the result to 2 decimal places (for two columns, the entire dataframe will be rounded to 2 decimal places)
+# reset_index() is used to convert the Series to a DataFrame
+# quality_ratio is the mean of the "quality_ratio" column
+# poor_query_percentage is the percentage of poor queries
+# query_name is the name of the query
+
 ```
 
 #### 2. how to merge data in pandas?
@@ -112,7 +137,7 @@ df[df['column'].isin(df['other_column'])] # filter the data by multiple values
 # isin() is used to check if the value of the "column" column is in the "other_column" column
 ```
 
-#### 11. how to use Series.diff() in pandas?
+#### 11. how to use Series.diff() in pandas? (same for shift(), cumsum())
 ```python
 df['column'].diff() # get the difference between the current value and the previous value
 
@@ -124,6 +149,11 @@ s.diff()
 # 1    3.0      # 4 - 1 = 3
 # 2    3.0      # 7 - 4 = 3
 # 3    3.0      # 10 - 7 = 3
+
+s = pd.Series([10, 20, 30])
+
+s.shift(1)    # [NaN, 10, 20]
+s.cumsum()    # [10, 30, 60]
 ```
 
 #### 12. how to use pivot() and pivot_table() in pandas?
@@ -154,4 +184,121 @@ df.pivot_table(values='value', index='index', columns='column', aggfunc='mean') 
 # index is used to specify the column to pivot on
 # columns is used to specify the column to pivot on
 # aggfunc is used to specify the aggregation function
+```
+
+#### 13. how to use map() in column to replace the values?
+```python
+df['column'] = df['column'].map({'old': 'new'}) # replace the values of the "column" column with the "new" value
+
+# e.g. map True to "Yes" and False to "No"
+triangle["triangle"] = (
+    (triangle["x"] + triangle["y"] > triangle["z"]) &
+    (triangle["x"] + triangle["z"] > triangle["y"]) &
+    (triangle["y"] + triangle["z"] > triangle["x"])
+).map({True: "Yes", False: "No"})
+
+[True, False, True].map({True: "Yes", False: "No"}) # ["Yes", "No", "Yes"]
+```
+
+#### 14. the difference between size() and count() in pandas/groupby()?
+```python
+df = pd.DataFrame({
+    "a": [1, None, 3],
+    "b": [4, 5, None]
+})
+
+df.size     # 6 (3 rows × 2 cols) as an attribute of the dataframe
+df.count()  # Series: a=2, b=2 (non-null per column)
+
+
+# size() and count() are different in groupby()
+df = pd.DataFrame({
+    "group": ["A", "A", "B"],
+    "value": [1, None, 3]
+})
+
+df.groupby("group").size()
+# group
+# A    2
+# B    1
+# (counts all rows per group)
+
+df.groupby("group").count()
+# group  value
+# A      1      (skips None)
+# B      1
+```
+
+#### 15. different ways to write a groupby()?
+```python
+sales.groupby("seller_id")["price"].sum()
+sales.groupby("seller_id").agg({"price": "sum"})
+sales.groupby("seller_id")["price"].agg("sum") # same as sales.groupby("seller_id")["price"].sum()
+```
+
+#### 16. pandas broadcasting for dataframe?
+```python
+s = pd.Series([10, 20, 30])
+
+# Arithmetic
+s + 5     # [15, 25, 35]
+s - 5     # [5, 15, 25]
+s * 2     # [20, 40, 60]
+s / 10    # [1.0, 2.0, 3.0]
+
+# Comparison (returns Boolean Series)
+s > 15    # [False, True, True]
+s < 25    # [True, True, False]
+s == 20   # [False, True, False]
+```
+
+#### 17. how to use na-related functions in pandas?
+```python
+# check if the values are NaN or not
+s = pd.Series([1, None, 3, None])
+
+s.isna()     # [False, True, False, True]
+s.isnull()   # [False, True, False, True] same as s.isna()
+s.notna()    # [True, False, True, False]
+s.notnull()  # [True, False, True, False] same as s.notna()
+
+
+s = pd.Series([1, None, 3, None])
+# fill the NaN values with 0 or "X"
+s.fillna(0)     # [1, 0, 3, 0]
+s.fillna("X")   # [1, "X", 3, "X"]
+s.dropna()      # [1, 3]
+s.ffill()       # [1, 1, 3, 3] (fill the next value)
+s.bfill()       # [1, 3, 3, NaN] (fill the previous value)
+
+# count the number of NaN and non-NaN values
+s.isna().sum()    # count of NaN
+s.notna().sum()   # count of non-NaN
+
+# drop the rows with NaN and fill the NaN values with 0
+df = pd.DataFrame({
+    "a": [1, None, 3],
+    "b": [None, 5, 6]
+})
+
+df.dropna()              # rows with no NaN
+df.dropna(axis=1)        # columns with no NaN
+df.fillna({"a": 0, "b": 99})  # different fill per column
+```
+
+#### 18. rounding in python and how to use a standard rounding function?
+```python
+# python always rounds to even
+round(0.5)  # 0 (rounds to even)
+round(1.5)  # 2 (rounds to even)
+round(2.5)  # 2 (rounds to even)
+round(3.5)  # 4 (rounds to even)
+
+# use traditional rounding by using apply(round2)
+round2 = lambda x: round(x + 1e-9, 2)
+df.apply(round2)
+# 0.00
+# 1.00
+# 2.00
+# 3.00
 ```
