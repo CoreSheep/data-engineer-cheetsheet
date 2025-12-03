@@ -37,6 +37,16 @@
 | 31 | 1211 | Easy | [Queries Quality and Percentage](https://leetcode.com/problems/queries-quality-and-percentage/) |
 | 32 | 1241 | Easy | [Number of Comments per Post](https://leetcode.com/problems/number-of-comments-per-post/) |
 | 33 | 1280 | Easy | [Students and Examinations](https://leetcode.com/problems/students-and-examinations/) |
+| 34 | 1303 | Easy | [Find the Team Size](https://leetcode.com/problems/find-the-team-size/) |
+| 35 | 1322 | Easy | [Ads Performance](https://leetcode.com/problems/ads-performance/) |
+| 36 | 1327 | Easy | [List the Products Ordered in a Period](https://leetcode.com/problems/list-the-products-ordered-in-a-period/) |
+| 37 | 1350 | Easy | [Students With Invalid Departments](https://leetcode.com/problems/students-with-invalid-departments/) |
+| 38 | 1378 | Easy | [Replace Employee ID With The Unique Identifier](https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier/) |
+| 39 | 1421 | Easy | [NPV Queries](https://leetcode.com/problems/npv-queries/) |
+| 40 | 1435 | Easy | [Create a Session Bar Chart](https://leetcode.com/problems/create-a-session-bar-chart/) |
+| 41 | 1484 | Easy | [Group Sold Products By The Date](https://leetcode.com/problems/group-sold-products-by-the-date/) |
+| 42 | 1495 | Easy | [Friendly Movies Streamed Last Month](https://leetcode.com/problems/friendly-movies-streamed-last-month/) |
+
 
 ### note:
 #### 1. how to aggregate data in pandas?
@@ -111,6 +121,16 @@ weather["record_date"] - weather["previous_date"] == pd.Timedelta(days=1) # comp
 # convert date column to datetime in pandas
 weather["record_date"] = pd.to_datetime(weather["record_date"])
 weather["previous_date"] = pd.to_datetime(weather["previous_date"])
+
+# 2. how to use dt.day, dt.month, dt.year, dt.hour, dt.minute, dt.second in pandas?
+weather["record_date"] = pd.to_datetime(weather["record_date"])
+
+weather["record_date"].dt.day # get the day of the week
+weather["record_date"].dt.month # get the month of the year
+weather["record_date"].dt.year # get the year of the month
+weather["record_date"].dt.hour # get the hour of the day
+weather["record_date"].dt.minute # get the minute of the hour
+weather["record_date"].dt.second # get the second of the minute
 ```
 
 #### 8. how drop duplicates in pandas?
@@ -228,6 +248,11 @@ df.groupby("group").count()
 # group  value
 # A      1      (skips None)
 # B      1
+
+df.groupby("group").agg({"value": "nunique"}) # count the number of unique values in the "value" column 
+# group  value
+# A      1      (counts the number of unique values in the "value" column)
+# B      1
 ```
 
 #### 15. different ways to write a groupby()?
@@ -271,6 +296,8 @@ s.fillna("X")   # [1, "X", 3, "X"]
 s.dropna()      # [1, 3]
 s.ffill()       # [1, 1, 3, 3] (fill the next value)
 s.bfill()       # [1, 3, 3, NaN] (fill the previous value)
+# fill with NaN for integer and float
+s.fillna(np.nan)
 
 # count the number of NaN and non-NaN values
 s.isna().sum()    # count of NaN
@@ -368,4 +395,27 @@ def weather_type(countries: pd.DataFrame, weather: pd.DataFrame) -> pd.DataFrame
 # weather_convert is a function that converts the average degree to a weather type
 # weather_type is a new column that contains the weather type
 # country_name is the column to sort the data by
+```
+
+#### 22. how to use query() in pandas?
+```python
+df_filtered = df.query("age > 30 and city == 'Berlin'")
+# query() is used to filter the data by multiple conditions
+
+df_filtered = df[(df["age"] > 30) & (df["city"] == "Berlin")]
+# filter the data by multiple conditions
+```
+
+#### 23. how to use assign() in pandas?
+```python
+# how to use assign() to add a new column to the dataframe with a new column name
+# and you and also use a lambda function to add a new column
+df2 = df.assign(total=df["price"] * df["qty"])
+
+df2 = (
+    df.assign(
+        total=lambda x: x["price"] * x["qty"],
+        discounted=lambda x: x["total"] * 0.9,
+    )
+)
 ```
