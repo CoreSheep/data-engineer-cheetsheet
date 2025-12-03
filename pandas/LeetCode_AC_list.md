@@ -46,9 +46,12 @@
 | 40 | 1435 | Easy | [Create a Session Bar Chart](https://leetcode.com/problems/create-a-session-bar-chart/) |
 | 41 | 1484 | Easy | [Group Sold Products By The Date](https://leetcode.com/problems/group-sold-products-by-the-date/) |
 | 42 | 1495 | Easy | [Friendly Movies Streamed Last Month](https://leetcode.com/problems/friendly-movies-streamed-last-month/) |
+| 43 | 1511 | Easy | [Customer Orders Frequency](https://leetcode.com/problems/customer-orders-frequency/) |
+| 44 | 1517 | Easy | [Find Users With Valid E-Mails](https://leetcode.com/problems/find-users-with-valid-e-mails/) |
+| 45 | 1527 | Easy | [Patients With a Condition](https://leetcode.com/problems/patients-with-a-condition/) |
+| 46 | 1543 | Easy | [Fix Product Name Format](https://leetcode.com/problems/fix-product-name-format/) |
+| 47 | 1565 | Easy | [Unique Orders and Customers Per Month](https://leetcode.com/problems/unique-orders-and-customers-per-month/) |
 
-
-### note:
 #### 1. how to aggregate data in pandas?
 - use `groupby()` to group the data by a column
 - use `agg()` to aggregate the data by a column
@@ -94,6 +97,7 @@ df.merge(df, on="key", how="left", suffixes=("_left", "_right")) # suffixes are 
 ```python
 df.sort_values('column', ascending=False, inplace=True)
 df.sort_values(['column1', 'column2'], ascending=[False, True], inplace=True)
+df.sort_values(by=['column1', 'column2'], ascending=[False, True], inplace=True) # same as above
 ```
 
 #### 4. how to filter data in pandas?
@@ -115,8 +119,9 @@ df['new_column'] = df['column'].shift(1) # shift the value of the "column" colum
 df['new_column'] = df['column'].shift(-1) # shift the value of the "column" column to the "new_column" column (get the next value)
 ```
 
-#### 7. how to compare Timedelta in pandas?
+#### 7. how to compare Timedelta in pandas? (pd.to_datetime(), pd.Timedelta(days=1), pd.strftime())
 ```python
+# 1. how to compare Timedelta in pandas?
 weather["record_date"] - weather["previous_date"] == pd.Timedelta(days=1) # compare the value of the "record_date" column to the "previous_date" column (get the difference)    
 # convert date column to datetime in pandas
 weather["record_date"] = pd.to_datetime(weather["record_date"])
@@ -131,7 +136,28 @@ weather["record_date"].dt.year # get the year of the month
 weather["record_date"].dt.hour # get the hour of the day
 weather["record_date"].dt.minute # get the minute of the hour
 weather["record_date"].dt.second # get the second of the minute
+
+# 3. how to use pd.strftime() in pandas?
+dt = pd.to_datetime("2000-01-16 14:30:45")
+
+dt.strftime("%Y-%m-%d")       # '2000-01-16'
+dt.strftime("%Y-%m")          # '2000-01'
+dt.strftime("%d/%m/%Y")       # '16/01/2000'
+dt.strftime("%B %d, %Y")      # 'January 16, 2000'
+dt.strftime("%Y-%m-%d %H:%M") # '2000-01-16 14:30'
+dt.strftime("%I:%M %p")       # '02:30 PM'
+dt.strftime("%A")             # 'Sunday'
+
+
+## to period
+s = pd.to_datetime(pd.Series(["2000-01-16", "2000-02-18"]))
+
+s.dt.to_period("M").astype(str)  # ['2000-01', '2000-02']
+s.dt.to_period("Y").astype(str)  # ['2000', '2000']
+s.dt.to_period("D").astype(str)  # ['2000-01-16', '2000-02-18']
+
 ```
+![strftime](./img/strftime.png)
 
 #### 8. how drop duplicates in pandas?
 ```python
@@ -419,3 +445,66 @@ df2 = (
     )
 )
 ```
+
+#### 24. how to use pd.str.match() in pandas?
+```python
+s = pd.Series(["apple", "banana", "cherry", "Apple123"])
+
+# match - starts with pattern, match from the beginning of the string
+s.str.match(r"[a-z]+")      # [True, True, True, False]
+
+# contains - anywhere in string
+s.str.contains(r"a")        # [True, True, False, False]
+
+# fullmatch - entire string matches
+s.str.fullmatch(r"[a-z]+")  # [True, True, True, False]
+
+s.str.findall(pattern) # find all matches of the "pattern" in the "column" column
+# pattern is the pattern to find all matches of in the "column" column
+
+s.str.replace(pattern, repl) # replace the "pattern" with the "repl" value in the "column" column
+# pattern is the pattern to replace in the "column" column
+# repl is the value to replace the "pattern" with in the "column" column
+
+# ^Start of string
+# $End of string
+
+# *   0 or more
+# +   1 or more
+# ?   0 or 1
+
+# e.g. find all matches of the "pattern" in the "column" column
+s.str.findall(r"[a-z]+") # ["apple", "banana", "cherry"]
+
+# e.g. replace the "pattern" with the "repl" value in the "column" column
+s.str.replace(r"[a-z]+", "X") # ["X", "X", "X", "X123"]
+
+# [a-z]   Lowercase letter
+# [A-Z]   Uppercase letter
+# [0-9] or \d   Digit
+# [a-zA-Z]   Any letter
+# [a-zA-Z0-9]   Alphanumeric
+# \w   Word char (letter, digit, _)
+# \s   Whitespace
+# .   Any character (except newline)
+# \.   Literal dot
+
+def valid_emails(users: pd.DataFrame) -> pd.DataFrame:
+    pattern = r"^[a-zA-Z][a-zA-Z0-9_.\-]*@leetcode\.com$" # pattern to match the email addresses
+    return users[users["mail"].str.match(pattern)]
+
+# Without r
+pattern = "^[a-zA-Z][a-zA-Z0-9_.\\-]*@leetcode\\.com$"
+
+# With r (cleaner), recommended, otherwise you will use double backslash for each backslash
+pattern = r"^[a-zA-Z][a-zA-Z0-9_.\-]*@leetcode\.com$"
+
+# exmaple 2
+
+def find_patients(patients: pd.DataFrame) -> pd.DataFrame:
+    pattern = r"(^| )DIAB1"
+    return patients[patients["conditions"].str.contains(pattern)]
+```
+
+
+
