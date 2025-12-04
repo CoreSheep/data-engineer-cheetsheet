@@ -64,7 +64,16 @@
 | 58 | 1741 | Easy | [Find Total Time Spent by Each Employee](https://leetcode.com/problems/find-total-time-spent-by-each-employee/) |
 | 59 | 1777 | Easy | [Product's Price for Each Store](https://leetcode.com/problems/products-price-for-each-store/) |
 | 60 | 1789 | Easy | [Primary Department for Each Employee](https://leetcode.com/problems/primary-department-for-each-employee/) |
-
+| 61 | 1795 | Easy | [Rearrange Products Table](https://leetcode.com/problems/rearrange-products-table/) |
+| 62 | 1809 | Easy | [Ad-Free Sessions](https://leetcode.com/problems/ad-free-sessions/) |
+| 63 | 1821 | Easy | [Find Customers With Positive Revenue this Year](https://leetcode.com/problems/find-customers-with-positive-revenue-this-year/) |
+| 64 | 1853 | Easy | [Convert Date Format](https://leetcode.com/problems/convert-date-format/) |
+| 65 | 1890 | Easy | [The Latest Login in 2020](https://leetcode.com/problems/the-latest-login-in-2020/) |
+| 66 | 1939 | Easy | [Users That Actively Request Confirmation Messages](https://leetcode.com/problems/users-that-actively-request-confirmation-messages/) |
+| 67 | 1978 | Easy | [Employees Whose Manager Left the Company](https://leetcode.com/problems/employees-whose-manager-left-the-company/) |
+| 68 | 2026 | Easy | [Low Quality Problems](https://leetcode.com/problems/low-quality-problems/) |
+| 69 | 2072 | Easy | [The Winner University](https://leetcode.com/problems/the-winner-university/) |
+| 70 | 2082 | Easy | [The Number of Rich Customers](https://leetcode.com/problems/the-number-of-rich-customers/) |
 
 
 #### 1. how to aggregate data in pandas?
@@ -158,10 +167,15 @@ dt = pd.to_datetime("2000-01-16 14:30:45")
 dt.strftime("%Y-%m-%d")       # '2000-01-16'
 dt.strftime("%Y-%m")          # '2000-01'
 dt.strftime("%d/%m/%Y")       # '16/01/2000'
-dt.strftime("%B %d, %Y")      # 'January 16, 2000'
+dt.strftime("%B %d, %Y")      # 'January 09, 2000'
+dt.strftime("%B %-d, %Y")     # 'January 9, 2000' %-d means no leading zero
 dt.strftime("%Y-%m-%d %H:%M") # '2000-01-16 14:30'
 dt.strftime("%I:%M %p")       # '02:30 PM'
 dt.strftime("%A")             # 'Sunday'
+# A -- day of the week (full name) Monday, Tuesday, Wednesday, etc.
+# B -- month of the year (full name) January, February, March, etc.
+# C -- day of the month
+# D -- day of the year
 
 
 ## to period
@@ -588,5 +602,37 @@ np.floor(x + 0.5)
 df.loc[condition, "column"] = new_value
 ```
 
+#### 28. how to use melt() in pandas?
+```python
+melt() Parameters
+# Parameter Description
+| Parameter   | Description                                |
+|-------------|--------------------------------------------|
+| id_vars     | Columns to keep as-is                      |
+| value_vars  | Columns to unpivot (default: all others)   |
+| var_name    | Name for the "variable" column             |
+| value_name  | Name for the "value" column                |
 
+df.melt(
+    id_vars=["product_id"],
+    value_vars=["store1", "store2", "store3"], # default: all others
+    var_name="store", # name for the "variable" column same as columns in pivot()
+    value_name="price" # name for the "value" column same as values in pivot()
+) # melt the data by the "product_id" column and the "store" column, the "price" column is the value of the "store" column
+# the result is like this:
+# product_id store  price
+# 0          1  store1   10
+# 1          1  store2   20
+# 2          1  store3   30   
 
+# pivot vs melt
+# pivot: long → wide
+df.pivot(index="product_id", columns="store", values="price")
+
+# melt: wide → long
+df.melt(id_vars="product_id", var_name="store", value_name="price")
+```
+
+#### 29. how to use pivot() in pandas?
+```python
+df.pivot(index="id", columns="month", values="revenue")
