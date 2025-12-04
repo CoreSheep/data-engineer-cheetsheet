@@ -51,6 +51,21 @@
 | 45 | 1527 | Easy | [Patients With a Condition](https://leetcode.com/problems/patients-with-a-condition/) |
 | 46 | 1543 | Easy | [Fix Product Name Format](https://leetcode.com/problems/fix-product-name-format/) |
 | 47 | 1565 | Easy | [Unique Orders and Customers Per Month](https://leetcode.com/problems/unique-orders-and-customers-per-month/) |
+| 48 | 1571 | Easy | [Warehouse Manager](https://leetcode.com/problems/warehouse-manager/) |
+| 49 | 1587 | Easy | [Bank Account Summary](https://leetcode.com/problems/bank-account-summary/) |
+| 50 | 1607 | Easy | [Sellers With No Sales](https://leetcode.com/problems/sellers-with-no-sales/) |
+| 51 | 1623 | Easy | [All Valid Triplets That Can Represent a Country](https://leetcode.com/problems/all-valid-triplets-that-can-represent-a-country/) |
+| 52 | 1633 | Easy | [Percentage of Users Attended a Contest](https://leetcode.com/problems/percentage-of-users-attended-a-contest/) |
+| 53 | 1661 | Easy | [Average Time of Process per Machine](https://leetcode.com/problems/average-time-of-process-per-machine/) |
+| 54 | 1667 | Easy | [Fix Names in a Table](https://leetcode.com/problems/fix-names-in-a-table/) |
+| 55 | 1677 | Easy | [Product's Worth Over Invoices](https://leetcode.com/problems/products-worth-over-invoices/) |
+| 56 | 1683 | Easy | [Invalid Tweets](https://leetcode.com/problems/invalid-tweets/) |
+| 57 | 1731 | Easy | [The Number of Employees Who Met the Target](https://leetcode.com/problems/the-number-of-employees-who-met-the-target/) |
+| 58 | 1741 | Easy | [Find Total Time Spent by Each Employee](https://leetcode.com/problems/find-total-time-spent-by-each-employee/) |
+| 59 | 1777 | Easy | [Product's Price for Each Store](https://leetcode.com/problems/products-price-for-each-store/) |
+| 60 | 1789 | Easy | [Primary Department for Each Employee](https://leetcode.com/problems/primary-department-for-each-employee/) |
+
+
 
 #### 1. how to aggregate data in pandas?
 - use `groupby()` to group the data by a column
@@ -217,7 +232,7 @@ df = pd.DataFrame({
 # 1   1    Feb      200
 # 2   2    Jan      150
 
-df.pivot(index="id", columns="month", values="revenue") (no duplicates for columns)
+df.pivot(index="id", columns="month", values="revenue").reset_index() # reset the index to get the original index
 
 # Wide format:
 # month  Feb    Jan
@@ -226,11 +241,12 @@ df.pivot(index="id", columns="month", values="revenue") (no duplicates for colum
 # 2      NaN    150.0
 
 
-df.pivot_table(values='value', index='index', columns='column', aggfunc='mean') # pivot the data by the "index" column and the "column" column
-# values is used to specify the column to pivot
+df.pivot_table(index='index', columns='column', values=['value1', 'value2'], aggfunc=['mean', 'sum']) # pivot the data by the "index" column and the "column" column, pivot_table can aggregate the data by multiple columns
 # index is used to specify the column to pivot on
 # columns is used to specify the column to pivot on
+# values is used to specify the column to pivot on
 # aggfunc is used to specify the aggregation function
+# aggfunc can be 'mean', 'sum', 'min', 'max', 'count', 'std', 'var'
 ```
 
 #### 13. how to use map() in column to replace the values?
@@ -396,6 +412,23 @@ pivot_table = pd.pivot_table(merged, values="student_id", index="student_name", 
 # index is used to specify the column to pivot on
 # columns is used to specify the column to pivot on
 # aggfunc is used to specify the aggregation function
+
+# the difference between pivot_table() and pivot() is that pivot_table() can handle missing values and pivot() cannot
+# e.g.
+pivot_table = pd.pivot_table(merged, values="student_id", index="student_name", columns="subject_name", aggfunc="count")
+# pivot_table is like this:
+# subject_name  Math  Science  History
+# student_name               
+# John           1       1       1
+# Jane           1       1       1
+# Jim            1       1       1
+# the difference between pivot_table() and pivot() is that pivot_table() can handle missing values and pivot() cannot
+# pivot() is like this:
+# subject_name  Math  Science  History
+# student_name               
+# John           1       1       1
+# Jane           1       1       1
+# Jim            1       1       1
 ```
 
 #### 21. how to use apply() in pandas?
@@ -504,6 +537,55 @@ pattern = r"^[a-zA-Z][a-zA-Z0-9_.\-]*@leetcode\.com$"
 def find_patients(patients: pd.DataFrame) -> pd.DataFrame:
     pattern = r"(^| )DIAB1"
     return patients[patients["conditions"].str.contains(pattern)]
+```
+
+#### 25. pd.str fucntions in pandas?
+```python
+s = pd.Series(["apple", "banana", "cherry", "Apple123"])
+
+s.str.upper() # ["APPLE", "BANANA", "CHERRY", "APPLE123"]
+s.str.lower() # ["apple", "banana", "cherry", "apple123"]
+s.str.title() # ["Apple", "Banana", "Cherry", "Iphone15 is good"]
+s.str.capitalize() # ["Apple", "Banana", "Cherry", "Iphone15 Is Good"] capitalize all words in the strings
+s.str.strip() # ["apple", "banana", "cherry", "Iphone15 is good"] strip the left and right side of the string   
+s.str.lstrip() # ["apple", "banana", "cherry", "Iphone15 is good"] strip the left side of the string
+s.str.rstrip() # ["apple", "banana", "cherry", "Iphone15 is good"] strip the right side of the string
+
+s.str.contains("World")      # [True, False, False, False]
+s.str.contains("o", case=False)  # Case insensitive
+
+s.str.replace("_", " ")           # ["data science", ...]
+s.str.replace(r"\d+", "", regex=True)  # Remove digits
+
+s.str.len()  # [15, 6, 12, 14]
+
+s.str.startswith("data")  # [False, False, True, False]
+s.str.endswith(".com")    # [False, False, False, True]
+
+s.str.match(r"[a-z]+")  # [False, False, True, True]
+```
+
+#### 26. how to use traditional rounding function in pandas?
+```python
+# method 1
+round2 = lambda x: round(x + 1e-9, 2)
+df.apply(round2)
+# 0.00
+# 1.00
+# 2.00
+# 3.00
+
+# method 2
+np.floor(x + 0.5)
+
+# method 3
+(pd.Series([0.0, 0.5, 1.0, 1.5, 2.0]) + 0.5).astype(int) # [0, 1, 1, 2, 2] round up the values  
+```
+
+#### 27. how to use pd.loc() in pandas?
+```python
+# Select rows AND columns, then assign
+df.loc[condition, "column"] = new_value
 ```
 
 
