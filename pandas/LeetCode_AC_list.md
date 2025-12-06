@@ -817,3 +817,10 @@ df["rank"] = df["score"].rank(ascending=False)
 # ascending=False: the highest score = rank 1
 # ascending=True: the lowest score = rank 1
 ```
+
+#### 35. how to drop a column in pandas?
+```python
+df.drop(columns=["column"]) # drop the "column" column
+df.drop(columns=["column1", "column2"]) # drop the "column1" and "column2" columns
+df.drop(columns="a", inplace=True) # drop the "a" column and save the changes
+```
