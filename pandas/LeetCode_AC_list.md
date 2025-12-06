@@ -1,6 +1,6 @@
 ## LeetCode Problems Solved (Pandas)
 
-**Total Solved: 13 problems** | **Difficulty: All Easy**
+**Total Solved: 95 problems** | **Difficulty: All Easy**
 
 | # | Problem ID | Difficulty | Problem Name |
 |---|:----------:|:----------:|:-------------|
@@ -74,6 +74,31 @@
 | 68 | 2026 | Easy | [Low Quality Problems](https://leetcode.com/problems/low-quality-problems/) |
 | 69 | 2072 | Easy | [The Winner University](https://leetcode.com/problems/the-winner-university/) |
 | 70 | 2082 | Easy | [The Number of Rich Customers](https://leetcode.com/problems/the-number-of-rich-customers/) |
+| 71 | 2205 | Easy | [The Number of Users That Are Eligible for Discount](https://leetcode.com/problems/the-number-of-users-that-are-eligible-for-discount/) |
+| 72 | 2230 | Easy | [The Users That Are Eligible for Discount](https://leetcode.com/problems/the-users-that-are-eligible-for-discount/) |
+| 73 | 2329 | Easy | [Product Sales Analysis IV](https://leetcode.com/problems/product-sales-analysis-iv/) |
+| 74 | 2339 | Easy | [All the Matches of the League](https://leetcode.com/problems/all-the-matches-of-the-league/) |
+| 75 | 2356 | Easy | [Number of Unique Subjects Taught by Each Teacher](https://leetcode.com/problems/number-of-unique-subjects-taught-by-each-teacher/) |
+| 76 | 2377 | Easy | [Sort the Olympic Table](https://leetcode.com/problems/sort-the-olympic-table/) |
+| 77 | 2480 | Easy | [Form a Chemical Bond](https://leetcode.com/problems/form-a-chemical-bond/) |
+| 78 | 2504 | Easy | [Concatenate the Name and the Department Number](https://leetcode.com/problems/concatenate-the-name-and-the-department-number/) |
+| 79 | 2668 | Easy | [Find Latest Salaries](https://leetcode.com/problems/find-latest-salaries/) |
+| 80 | 2669 | Easy | [Count Artist Occurrences On Spotify Ranking List](https://leetcode.com/problems/count-artist-occurrences-on-spotify-ranking-list/) |
+| 81 | 2687 | Easy | [Bikes Last Time Used](https://leetcode.com/problems/bikes-last-time-used/) |
+| 82 | 2837 | Easy | [Total Traveled Distance](https://leetcode.com/problems/total-traveled-distance/) |
+| 83 | 2853 | Easy | [Highest Salaries Difference](https://leetcode.com/problems/highest-salaries-difference/) |
+| 84 | 2877 | Easy | [Create a DataFrame from List](https://leetcode.com/problems/create-a-dataframe-from-list/) |
+| 85 | 2878 | Easy | [Get the Size of a DataFrame](https://leetcode.com/problems/get-the-size-of-a-dataframe/) |
+| 86 | 2879 | Easy | [Display the First Three Rows](https://leetcode.com/problems/display-the-first-three-rows/) |
+| 87 | 2880 | Easy | [Select Data](https://leetcode.com/problems/select-data/) |
+| 88 | 2881 | Easy | [Create a New Column](https://leetcode.com/problems/create-a-new-column/) |
+| 89 | 2882 | Easy | [Drop Duplicate Rows](https://leetcode.com/problems/drop-duplicate-rows/) |
+| 90 | 2883 | Easy | [Drop Missing Data](https://leetcode.com/problems/drop-missing-data/) |
+| 91 | 2884 | Easy | [Modify Columns](https://leetcode.com/problems/modify-columns/) |
+| 92 | 2885 | Easy | [Rename Columns](https://leetcode.com/problems/rename-columns/) |
+| 93 | 2886 | Easy | [Change Data Type](https://leetcode.com/problems/change-data-type/) |
+| 94 | 2887 | Easy | [Fill Missing Data](https://leetcode.com/problems/fill-missing-data/) |
+| 95 | 2888 | Easy | [Reshape Data: Concatenate](https://leetcode.com/problems/reshape-data-concatenate/) |
 
 
 #### 1. how to aggregate data in pandas?
@@ -349,7 +374,14 @@ s = pd.Series([1, None, 3, None])
 # fill the NaN values with 0 or "X"
 s.fillna(0)     # [1, 0, 3, 0]
 s.fillna("X")   # [1, "X", 3, "X"]
-s.dropna()      # [1, 3]
+
+# Fill specific columns with different values
+df.fillna({"col1": 0, "col2": "unknown", "col3": -1})
+
+
+s.dropna()      # [1, 3] (all rows with NaN are dropped
+df.dropna(subset=["column"]) # drop the rows with NaN in the "column" column
+
 s.ffill()       # [1, 1, 3, 3] (fill the next value)
 s.bfill()       # [1, 3, 3, NaN] (fill the previous value)
 # fill with NaN for integer and float
@@ -468,6 +500,28 @@ def weather_type(countries: pd.DataFrame, weather: pd.DataFrame) -> pd.DataFrame
 # weather_convert is a function that converts the average degree to a weather type
 # weather_type is a new column that contains the weather type
 # country_name is the column to sort the data by
+
+# e.g. 2
+
+def type_of_triangle(triangles: pd.DataFrame) -> pd.DataFrame:
+    def check_type_of_triangle(temp):
+        a, b, c = temp["A"], temp["B"], temp["C"]
+        if (a + b) <= c or (a + c) <= b or (b + c) <= a:
+            return "Not A Triangle"
+        else:
+            if a == b and a == c:
+                return "Equilateral"
+            elif a == b or a == c or b == c:
+                return "Isosceles"
+            else:
+                return "Scalene"
+    # use apply() to apply the check_type_of_triangle function to each row of the dataframe
+    # axis=1 is used to apply the function to each row
+    # to_frame() is used to convert the Series to a DataFrame
+    # rename(columns={0: "triangle_type"}) is used to rename the column to "triangle_type"
+    triangles = triangles.apply(check_type_of_triangle, axis=1).to_frame().rename(columns={0: "triangle_type"})
+    return triangles
+    
 ```
 
 #### 22. how to use query() in pandas?
@@ -568,8 +622,21 @@ s.str.rstrip() # ["apple", "banana", "cherry", "Iphone15 is good"] strip the rig
 s.str.contains("World")      # [True, False, False, False]
 s.str.contains("o", case=False)  # Case insensitive
 
+s.str.split(" ") # ["apple", "banana", "cherry", "Iphone15 is good"] split the string by the " " character
+
+s.str.count("@") # [0, 0, 0, 0] count the number of "@" characters in the string
+
 s.str.replace("_", " ")           # ["data science", ...]
 s.str.replace(r"\d+", "", regex=True)  # Remove digits
+
+s.str[0] # ["a", "b", "c", "A"] get the first character of the string
+s.str[-1] # ["e", "a", "y", "3"] get the last character of the string
+s.str[0:3] # ["app", "ban", "che", "App"] get the first 3 characters of the string
+s.str[-3:] # ["ple", "ana", "ry", "123"] get the last 3 characters of the string
+s.str[::2] # ["a", "b", "c", "A"] get every other character of the string
+s.str[::-1] # ["321ppe", "ana", "y", "A"] reverse the string
+s.str[::-2] # ["321ppe", "ana", "y", "A"] reverse the string and get every other character of the string
+s.str[::-3] # ["321ppe", "ana", "y", "A"] reverse the string and get every other character of the string
 
 s.str.len()  # [15, 6, 12, 14]
 
@@ -618,7 +685,9 @@ df.melt(
     value_vars=["store1", "store2", "store3"], # default: all others
     var_name="store", # name for the "variable" column same as columns in pivot()
     value_name="price" # name for the "value" column same as values in pivot()
-) # melt the data by the "product_id" column and the "store" column, the "price" column is the value of the "store" column
+) 
+
+# melt the data by the "product_id" column and the "store" column, the "price" column is the value of the "store" column
 # the result is like this:
 # product_id store  price
 # 0          1  store1   10
@@ -633,6 +702,104 @@ df.pivot(index="product_id", columns="store", values="price")
 df.melt(id_vars="product_id", var_name="store", value_name="price")
 ```
 
-#### 29. how to use pivot() in pandas?
+
+#### 30. how to use merge on cross table? (fully connected table)
 ```python
-df.pivot(index="id", columns="month", values="revenue")
+result = teams.merge(teams, how="cross") (n * n combinations)
+# n is the number of rows in the "teams" dataframe
+# result is like this:
+# team_name   team_name   |
+#-------------|-------------|
+# Leetcode FC | Leetcode FC |
+# Leetcode FC | Ahly SC     |
+# Leetcode FC | Real Madrid |
+# Ahly SC     | Leetcode FC |
+# Ahly SC     | Ahly SC     |
+# Ahly SC     | Real Madrid |
+# Real Madrid | Leetcode FC |
+# Real Madrid | Ahly SC     |
+# Real Madrid | Real Madrid |
+```
+
+#### 31. how to create a new dataframe in pandas?
+```python
+import pandas as pd
+
+data = [[1, "Alice", 100], [2, "Bob", 200]]
+
+df = pd.DataFrame(data, columns=["id", "name", "salary"])
+#    id   name  salary
+# 0   1  Alice     100
+# 1   2    Bob     200
+```
+
+#### 32. how to use pd.iloc() in pandas? (data frame slicing)
+```python
+df.iloc[0] # [1, "Alice", 100] get the first row
+df.iloc[0:2] # [[1, "Alice", 100], [2, "Bob", 200]] get the first 2 rows
+df.iloc[0:2, 0:2] # [[1, "Alice"], [2, "Bob"]] get the first 2 rows and the first 2 columns
+
+# First 3 rows
+df.head(3)
+# or
+df.iloc[:3]
+
+# Remove last column
+df.iloc[:, :-1]
+
+# Both: first 3 rows, remove last column
+df.iloc[:3, :-1]
+```
+
+#### 33. how to use pd.concat() in pandas?
+```python
+pd.concat([df1, df2]) # concatenate the two dataframes
+pd.concat([df1, df2], axis=1) # concatenate the two dataframes horizontally
+pd.concat([df1, df2], axis=0, ignore_index=True) # concatenate the two dataframes vertically and ignore the index, and reset the index
+# ignore_index=True is used to ignore the index of the two dataframes
+# axis=0 is used to concatenate the two dataframes vertically
+# axis=1 is used to concatenate the two dataframes horizontally
+```
+
+#### 34. how to use rank() in pandas?
+```python
+df = pd.DataFrame({
+    "name": ["Alice", "Bob", "Charlie", "David"],
+    "score": [85, 92, 85, 78]
+})
+
+df["rank"] = df["score"].rank()
+#      name  score  rank
+# 0   Alice     85   2.5
+# 1     Bob     92   4.0
+# 2  Charlie    85   2.5
+# 3   David     78   1.0
+
+# method can be "average", "min", "max", "first", "dense"
+# average: the average rank in the group 1, 2.5, 2.5, 4
+# min: the smallest rank in the group 1, 2, 2, 3
+# max: the largest rank in the group 1, 3, 3, 4
+# first: the first rank in the group 1, 2, 3, 4
+# dense: the dense rank in the group 1, 2, 2, 3
+
+df["score"] = [85, 92, 85, 78]
+
+df["score"].rank(method="average")  # [2.5, 4.0, 2.5, 1.0]
+df["score"].rank(method="min")      # [2.0, 4.0, 2.0, 1.0]
+df["score"].rank(method="max")      # [3.0, 4.0, 3.0, 1.0]
+df["score"].rank(method="first")    # [2.0, 4.0, 3.0, 1.0]
+df["score"].rank(method="dense")    # [2.0, 3.0, 2.0, 1.0]
+
+df["rank"] = df["score"].rank(ascending=False)
+#      name  score  rank
+# 0   Alice     85   2.5
+# 1     Bob     92   1.0   ← highest score = rank 1
+# 2  Charlie    85   2.5
+# 3   David     78   4.0
+# ascending=False is used to rank the data in descending order
+# ascending=True is used to rank the data in ascending order
+
+# method can be "average", "min", "max", "first", "dense"
+# ascending=False: the highest score = rank 1
+# ascending=True: the lowest score = rank 1
+```
