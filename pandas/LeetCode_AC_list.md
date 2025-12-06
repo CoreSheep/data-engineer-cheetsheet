@@ -1,6 +1,6 @@
 ## LeetCode Problems Solved (Pandas)
 
-**Total Solved: 95 problems** | **Difficulty: All Easy**
+**Total Solved: 109 problems** | **Difficulty: All Easy**
 
 | # | Problem ID | Difficulty | Problem Name |
 |---|:----------:|:----------:|:-------------|
@@ -99,6 +99,20 @@
 | 93 | 2886 | Easy | [Change Data Type](https://leetcode.com/problems/change-data-type/) |
 | 94 | 2887 | Easy | [Fill Missing Data](https://leetcode.com/problems/fill-missing-data/) |
 | 95 | 2888 | Easy | [Reshape Data: Concatenate](https://leetcode.com/problems/reshape-data-concatenate/) |
+| 96 | 2889 | Easy | [Reshape Data: Pivot](https://leetcode.com/problems/reshape-data-pivot/) |
+| 97 | 2890 | Easy | [Reshape Data: Melt](https://leetcode.com/problems/reshape-data-melt/) |
+| 98 | 2891 | Easy | [Method Chaining](https://leetcode.com/problems/method-chaining/) |
+| 99 | 2985 | Easy | [Calculate Compressed Mean](https://leetcode.com/problems/calculate-compressed-mean/) |
+| 100 | 2987 | Easy | [Find Expensive Cities](https://leetcode.com/problems/find-expensive-cities/) |
+| 101 | 2990 | Easy | [Loan Types](https://leetcode.com/problems/loan-types/) |
+| 102 | 3051 | Easy | [Find Candidates for Data Scientist Position](https://leetcode.com/problems/find-candidates-for-data-scientist-position/) |
+| 103 | 3053 | Easy | [Classifying Triangles by Lengths](https://leetcode.com/problems/classifying-triangles-by-lengths/) |
+| 104 | 3059 | Easy | [Find All Unique Email Domains](https://leetcode.com/problems/find-all-unique-email-domains/) |
+| 105 | 3150 | Easy | [Invalid Tweets II](https://leetcode.com/problems/invalid-tweets-ii/) |
+| 106 | 3172 | Easy | [Second Day Verification](https://leetcode.com/problems/second-day-verification/) |
+| 107 | 3198 | Easy | [Find Cities in Each State](https://leetcode.com/problems/find-cities-in-each-state/) |
+| 108 | 3246 | Easy | [Premier League Table Ranking](https://leetcode.com/problems/premier-league-table-ranking/) |
+| 109 | 3358 | Easy | [Books with NULL Ratings](https://leetcode.com/problems/books-with-null-ratings/) |
 
 
 #### 1. how to aggregate data in pandas?
