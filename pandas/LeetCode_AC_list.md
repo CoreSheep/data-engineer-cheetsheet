@@ -1,6 +1,6 @@
 ## LeetCode Problems Solved (Pandas)
 
-**Total Solved: 109 problems** | **Difficulty: All Easy**
+**Total Solved: 115 problems** | **Difficulty: 114 Easy, 1 Medium**
 
 | # | Problem ID | Difficulty | Problem Name |
 |---|:----------:|:----------:|:-------------|
@@ -113,6 +113,12 @@
 | 107 | 3198 | Easy | [Find Cities in Each State](https://leetcode.com/problems/find-cities-in-each-state/) |
 | 108 | 3246 | Easy | [Premier League Table Ranking](https://leetcode.com/problems/premier-league-table-ranking/) |
 | 109 | 3358 | Easy | [Books with NULL Ratings](https://leetcode.com/problems/books-with-null-ratings/) |
+| 110 | 3415 | Easy | [Find Products with Three Consecutive Digits](https://leetcode.com/problems/find-products-with-three-consecutive-digits/) |
+| 111 | 3436 | Easy | [Find Valid Emails](https://leetcode.com/problems/find-valid-emails/) |
+| 112 | 3465 | Easy | [Find Products with Valid Serial Numbers](https://leetcode.com/problems/find-products-with-valid-serial-numbers/) |
+| 113 | 3570 | Easy | [Find Books with No Available Copies](https://leetcode.com/problems/find-books-with-no-available-copies/) |
+| 114 | 3642 | Easy | [Find Books with Polarized Opinions](https://leetcode.com/problems/find-books-with-polarized-opinions/) |
+| 115 | 176 | Medium | [Second Highest Salary](https://leetcode.com/problems/second-highest-salary/) |
 
 
 #### 1. how to aggregate data in pandas?
@@ -823,4 +829,14 @@ df["rank"] = df["score"].rank(ascending=False)
 df.drop(columns=["column"]) # drop the "column" column
 df.drop(columns=["column1", "column2"]) # drop the "column1" and "column2" columns
 df.drop(columns="a", inplace=True) # drop the "a" column and save the changes
+```
+
+#### 36 how to ace in string pattern matching in pandas?
+```python
+# \w number, alphabate, +, \W (non word), \d(0-9), \s whitespace, \b border of word
+# ^, $ (start and end with) ^hello$
+# *, +, ? (0+, 1+, 0 or 1)
+# group: \d{3} => 3 digits
+# bug: . means any character, use \. => '.'
+# edge case: .comm .com$ ends with .com (^hello$)
 ```
