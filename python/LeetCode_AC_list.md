@@ -1,6 +1,6 @@
 ## LeetCode Problems Solved (Python)
 
-**Total Solved: 20 problems** | **Difficulty: 20 Easy, 0 Medium**
+**Total Solved: 26 problems** | **Difficulty: 26 Easy, 0 Medium**
 
 | # | Problem ID | Difficulty | Problem Name |
 |---|:----------:|:----------:|:-------------|
@@ -25,6 +25,11 @@
 | 19 | 383 | Easy | [Ransom Note](https://leetcode.com/problems/ransom-note/) |
 | 20 | 387 | Easy | [First Unique Character in a String](https://leetcode.com/problems/first-unique-character-in-a-string/) |
 | 21 | 412 | Easy | [Fizz Buzz](https://leetcode.com/problems/fizz-buzz/) |
+| 22 | 415 | Easy | [Add Strings](https://leetcode.com/problems/add-strings/) |
+| 23 | 434 | Easy | [Number of Segments in a String](https://leetcode.com/problems/number-of-segments-in-a-string/) |
+| 24 | 459 | Easy | [Repeated Substring Pattern](https://leetcode.com/problems/repeated-substring-pattern/) |
+| 25 | 482 | Easy | [License Key Formatting](https://leetcode.com/problems/license-key-formatting/) |
+| 26 | 500 | Easy | [Keyboard Row](https://leetcode.com/problems/keyboard-row/) |
 
 
 ### File Reading
@@ -176,3 +181,12 @@ magazine2 = Counter("aab")
 missing2 = ransom2 - magazine2
 print(missing2)  # Counter({'a': 1}) - need 1 more 'a's
 ```
+
+#### 3. how to use <= (is subset) and >= (is superset) in set in python?
+```python
+set1 = {1, 2, 3}
+set2 = {1, 2, 3, 4, 5}
+print(set1 <= set2) # True
+print(set1 >= set2) # False
+```
+
