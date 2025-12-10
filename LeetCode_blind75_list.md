@@ -5,23 +5,23 @@ The famous list from a Meta engineer, organized by pattern:
 ### Arrays & Hashing (9) ✅
 
 #### Two Sum ✅
-link: https://leetcode.com/problems/two-sum/
-solution: hash table (seen)
-space: O(n) - seen hash table
-time: O(n) - one pass through the array
+link: https://leetcode.com/problems/two-sum/  
+solution: hash table (seen)  
+space: O(n) - seen hash table  
+time: O(n) - one pass through the array  
 
-#### Best Time to Buy and Sell Stock ✅
-link: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
-solution: two pointers (left and right) - left is the minimum price, right is the maximum price
-space: O(1) - min_price and max_profit
-time: O(n) - one pass through the array
+#### Best Time to Buy and Sell Stock ✅  
+link: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/  
+solution: two pointers (left and right) - left is the minimum price, right is the maximum price  
+space: O(1) - min_price and max_profit  
+time: O(n) - one pass through the array  
 
 #### Contains Duplicate ✅
 link: https://leetcode.com/problems/contains-duplicate/
-solution: hash table (seen) - if the number is already in the hash table, return True
-space: O(n) - seen hash table
-time: O(n) - one pass through the array
-note: use set() instead of hash table for better performance
+solution: hash table (seen) - if the number is already in the hash table, return True  
+space: O(n) - seen hash table  
+time: O(n) - one pass through the array  
+note: use set() instead of hash table for better performance  
 ```python
 seen = set()
 for num in nums:
@@ -45,11 +45,11 @@ else:
 ```s
 
 #### Product of Array Except Self ✅
-link: https://leetcode.com/problems/product-of-array-except-self/
-solution: prefix and suffix product
-space: O(n) - answer array
-time: O(n) - two passes through the array, prefix and suffix product
-note: use prefix and suffix product to calculate the product of the array except self
+link: https://leetcode.com/problems/product-of-array-except-self/  
+solution: prefix and suffix product  
+space: O(n) - answer array  
+time: O(n) - two passes through the array, prefix and suffix product  
+note: use prefix and suffix product to calculate the product of the array except self  
 ```python
  def productExceptSelf(self, nums: List[int]) -> List[int]:
         answer = [1] * len(nums)
@@ -67,11 +67,11 @@ note: use prefix and suffix product to calculate the product of the array except
 
 
 #### Maximum Subarray
-link: https://leetcode.com/problems/maximum-subarray/
-solution: Kadane's Algorithm (dynamic programming)
-space: O(1) - max_sum, current_sum
-time: O(n) - one pass through the array
-note: use Kadane's Algorithm to check if the current sum is greater than the current number, if it is, extend the current sum, if it is not, restart the current sum.
+link: https://leetcode.com/problems/maximum-subarray/  
+solution: Kadane's Algorithm (dynamic programming)  
+space: O(1) - max_sum, current_sum  
+time: O(n) - one pass through the array  
+note: use Kadane's Algorithm to check if the current sum is greater than the current number, if it is, extend the current sum, if it is not, restart the current sum.  
 ```python
 def maxSubArray(self, nums: List[int]) -> int:
     cursum = nums[0]
@@ -83,12 +83,12 @@ def maxSubArray(self, nums: List[int]) -> int:
     return maxsum
 ```
 
-#### Maximum Product Subarray ✅
-link: https://leetcode.com/problems/maximum-product-subarray/
-solution: Kadane's Algorithm (dynamic programming)
-space: O(1) - max_product, min_product, max_product
-time: O(n) - one pass through the array
-note: A little different from the maximum subarray, because we need to consider the negative numbers. (save the min_product and max_product)
+#### Maximum Product Subarray ✅  
+link: https://leetcode.com/problems/maximum-product-subarray/  
+solution: Kadane's Algorithm (dynamic programming)  
+space: O(1) - max_product, min_product, max_product  
+time: O(n) - one pass through the array  
+note: A little different from the maximum subarray, because we need to consider the negative numbers. (save the min_product and max_product)  
 ```python
 def maxProduct(self, nums: List[int]) -> int:
     cur_min = nums[0]
@@ -106,12 +106,12 @@ def maxProduct(self, nums: List[int]) -> int:
 ```
 
 
-#### Find Minimum in Rotated Sorted Array
+#### Find Minimum in Rotated Sorted Array  
 link: https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
-solution: binary search
-space: O(1) - left, right, mid
-time: O(log n) - one pass through the array
-note: use binary search to find the minimum number in the rotated sorted array
+solution: binary search  
+space: O(1) - left, right, mid  
+time: O(log n) - one pass through the array  
+note: use binary search to find the minimum number in the rotated sorted array  
 
 #### Search in Rotated Sorted Array
 #### 3Sum
