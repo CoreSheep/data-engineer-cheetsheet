@@ -42,14 +42,77 @@ if 2 in seen:
     print("2 is in the set")
 else:
     print("2 is not in the set")
+```s
+
+#### Product of Array Except Self ✅
+link: https://leetcode.com/problems/product-of-array-except-self/
+solution: prefix and suffix product
+space: O(n) - answer array
+time: O(n) - two passes through the array, prefix and suffix product
+note: use prefix and suffix product to calculate the product of the array except self
+```python
+ def productExceptSelf(self, nums: List[int]) -> List[int]:
+        answer = [1] * len(nums)
+        prefix_prod = 1  # the prefix product of all  previous elements
+        for i in range(len(nums)):
+            answer[i] *= prefix_prod  # update for each prefix product
+            prefix_prod *= nums[i]s
+
+        suffix_prod = 1  # the suffix product of all previous element from back to front
+        for i in range(len(nums) - 1, -1, -1):
+            answer[i] *= suffix_prod  # update for each suffix product
+            suffix_prod *= nums[i]  # the answer should be prefix product * suffix product
+        return answer
 ```
 
-#### Product of Array Except Self
-link: https://leetcode.com/problems/product-of-array-except-self/
+
 #### Maximum Subarray
 link: https://leetcode.com/problems/maximum-subarray/
-#### Maximum Product Subarray
+solution: Kadane's Algorithm (dynamic programming)
+space: O(1) - max_sum, current_sum
+time: O(n) - one pass through the array
+note: use Kadane's Algorithm to check if the current sum is greater than the current number, if it is, extend the current sum, if it is not, restart the current sum.
+```python
+def maxSubArray(self, nums: List[int]) -> int:
+    cursum = nums[0]
+    maxsum = nums[0]
+
+    for num in nums[1: ]:
+        cursum = max(num, num + cursum)  # extend or restart?
+        maxsum = max(maxsum, cursum)  # update for the global maxsum
+    return maxsum
+```
+
+#### Maximum Product Subarray ✅
+link: https://leetcode.com/problems/maximum-product-subarray/
+solution: Kadane's Algorithm (dynamic programming)
+space: O(1) - max_product, min_product, max_product
+time: O(n) - one pass through the array
+note: A little different from the maximum subarray, because we need to consider the negative numbers. (save the min_product and max_product)
+```python
+def maxProduct(self, nums: List[int]) -> int:
+    cur_min = nums[0]
+    cur_max = nums[0]
+    max_prod = nums[0]
+
+    for num in nums[1: ]:
+        candidates = {num, cur_min * num, cur_max * num}
+        cur_min = min(candidates) 
+        # The reason that we save cur_min is that maybe later
+        # the cur_min * num could be the current largest
+        cur_max = max(candidates)
+        max_prod = max(max_prod, cur_max)
+    return max_prod
+```
+
+
 #### Find Minimum in Rotated Sorted Array
+link: https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
+solution: binary search
+space: O(1) - left, right, mid
+time: O(log n) - one pass through the array
+note: use binary search to find the minimum number in the rotated sorted array
+
 #### Search in Rotated Sorted Array
 #### 3Sum
 
