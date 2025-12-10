@@ -40,7 +40,7 @@
 import pandas as pd
 
 df = pd.read_csv("file.csv")
-df = pd.read_excel("file.xlsx")
+df = pd.read_excel("file.xlsx")s
 df = pd.read_json("file.json")
 df = pd.read_html("file.html")
 
