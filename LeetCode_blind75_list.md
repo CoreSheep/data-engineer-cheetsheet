@@ -17,7 +17,7 @@ space: O(1) - min_price and max_profit
 time: O(n) - one pass through the array  
 
 #### Contains Duplicate ✅
-link: https://leetcode.com/problems/contains-duplicate/
+link: https://leetcode.com/problems/contains-duplicate/  
 solution: hash table (seen) - if the number is already in the hash table, return True  
 space: O(n) - seen hash table  
 time: O(n) - one pass through the array  
@@ -66,7 +66,7 @@ note: use prefix and suffix product to calculate the product of the array except
 ```
 
 
-#### Maximum Subarray
+#### Maximum Subarray ✅
 link: https://leetcode.com/problems/maximum-subarray/  
 solution: Kadane's Algorithm (dynamic programming)  
 space: O(1) - max_sum, current_sum  
@@ -106,22 +106,136 @@ def maxProduct(self, nums: List[int]) -> int:
 ```
 
 
-#### Find Minimum in Rotated Sorted Array  
-link: https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
-solution: binary search  
-space: O(1) - left, right, mid  
-time: O(log n) - one pass through the array  
-note: use binary search to find the minimum number in the rotated sorted array  
+#### Find Minimum in Rotated Sorted Array ✅
+link: https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/<br>
+solution: binary search<br>
+space: O(1)<br>
+time: O(log n)<br>
+note: use binary search to find the minimum number in the rotated sorted array<br>
+```python
+def findMin(self, nums: List[int]) -> int:
+    l, r = 0, len(nums) - 1
+    while l < r:
+        m = (l + r) // 2
+        if  nums[m] > nums[r]:
+            l = m + 1
+        else:
+            r = m
+        return nums[l]
+```
 
-#### Search in Rotated Sorted Array
-#### 3Sum
+#### Search in Rotated Sorted Array ✅
+link: https://leetcode.com/problems/search-in-rotated-sorted-array/<br>
+solution: binary search, find the sorted half and check if the target is in the sorted half<br>
+space: O(1)<br>
+time: O(log n)<br>
+note: use binary search to find the target number in the rotated sorted array<br>
+```python
+def search(self, nums: List[int], target: int) -> int:
+    l, r = 0, len(nums) - 1
+    
+    while l <= r:
+        m = (l + r) // 2
+        
+        if nums[m] == target:
+            return m
+        
+        # Left half is sorted
+        if nums[l] <= nums[m]:
+            if nums[l] <= target < nums[m]:
+                r = m - 1  # target in left half
+            else:
+                l = m + 1  # target in right half
+        
+        # Right half is sorted
+        else:
+            if nums[m] < target <= nums[r]:
+                l = m + 1  # target in right half
+            else:
+                r = m - 1  # target in left half
+    return -1
+    ```
 
+#### 3Sum ✅
+link: https://leetcode.com/problems/3sum/<br>
+solution: 
+    - sort the array<br>
+    - fix one number and use two pointers to find the other two numbers<br>
+    - skip the duplicate numbers<br>
+space: O(1)<br>
+time: O(n^2)<br>
+note: use two pointers to find the b + c = -a<br>
+```python
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        result = []
+        
+        for i in range(len(nums) - 2):
+            # Skip duplicate for first number
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+            
+            # Two pointers for remaining two numbers
+            l, r = i + 1, len(nums) - 1
+            target = -nums[i]
+            
+            while l < r:
+                total = nums[l] + nums[r]
+                
+                if total == target:
+                    result.append([nums[i], nums[l], nums[r]])
+                    l += 1
+                    r -= 1
+                    # Skip duplicates
+                    while l < r and nums[l] == nums[l - 1]:
+                        l += 1
+                    while l < r and nums[r] == nums[r + 1]:
+                        r -= 1
+                elif total < target:
+                    l += 1
+                else:
+                    r -= 1
+        
+        return result
+```
 
 ### Two Pointers (3) ✅
 
-#### Valid Palindrome
-#### Container With Most Water
+#### Valid Palindrome ✅
+link: https://leetcode.com/problems/valid-palindrome/<br>
+solution: two pointers<br>
+space: O(1)<br>
+time: O(n)<br>
+note: use two pointers to check if the string is a palindrome from both sides<br>
+```python
+def isPalindrome(self, s: str) -> bool:
+    # 'a'.isalnum(), 'a'.isalpha(), '4'.isdigit()
+    # remove non-alphanumeric characters and convert them to lowercase letters
+    s_new = "".join([c for c in s if c.isalnum()]).lower()
+    
+    # two points
+    l, r = 0, len(s_new) - 1
+    while l < r:
+        if s_new[l] != s_new[r]:
+            return False
+        l += 1
+        r -= 1
+    return True
+```
+
+#### Container With Most Water ✅
+link: https://leetcode.com/problems/container-with-most-water/<br>
+solution: two pointers<br>
+space: O(1)<br>
+time: O(n)<br>
+note: use two pointers to find the maximum area<br>
+```python
+def maxArea(self, height: List[int]) -> int:
+    l, r = 0, len(height) - 1
+    max_area = 0
 #### 3Sum (also listed above)
+
 
 ### Sliding Window (4) ✅
 
@@ -130,14 +244,17 @@ note: use binary search to find the minimum number in the rotated sorted array
 #### Minimum Window Substring
 #### Best Time to Buy and Sell Stock (revisited with window)
 
+
 ### Stack (1) ✅
 
 #### Valid Parentheses
+
 
 ### Binary Search (2) ✅
 
 #### Find Minimum in Rotated Sorted Array
 #### Search in Rotated Sorted Array
+
 
 ### Linked List (6) ✅
 
@@ -147,6 +264,7 @@ note: use binary search to find the minimum number in the rotated sorted array
 #### Reorder List
 #### Remove Nth Node From End of List
 #### Merge K Sorted Lists
+
 
 ### Trees (11)
 
@@ -162,11 +280,13 @@ note: use binary search to find the minimum number in the rotated sorted array
 #### Binary Tree Maximum Path Sum
 #### Serialize and Deserialize Binary Tree
 
+
 ### Tries (3)
 
 #### Implement Trie (Prefix Tree)
 #### Design Add and Search Words Data Structure
 #### Word Search II
+
 
 ### Heap / Priority Queue (3)
 
@@ -174,10 +294,12 @@ note: use binary search to find the minimum number in the rotated sorted array
 #### Top K Frequent Elements
 #### Find Median from Data Stream
 
+
 ### Backtracking (2)
 
 #### Combination Sum
 #### Word Search
+
 
 ### Graphs (8)
 
@@ -189,6 +311,7 @@ note: use binary search to find the minimum number in the rotated sorted array
 #### Number of Connected Components (premium)
 #### Graph Valid Tree (premium)
 #### Alien Dictionary (premium)
+
 
 ### Dynamic Programming (11)
 
@@ -204,10 +327,12 @@ note: use binary search to find the minimum number in the rotated sorted array
 #### Unique Paths
 #### Jump Game
 
+
 ### 1-D DP (additional)
 
 #### Maximum Product Subarray
 #### Partition Equal Subset Sum
+
 
 ### Intervals (5)
 
@@ -217,16 +342,19 @@ note: use binary search to find the minimum number in the rotated sorted array
 #### Meeting Rooms (premium)
 #### Meeting Rooms II (premium)
 
+
 ### Greedy (2)
 
 #### Maximum Subarray
 #### Jump Game
+
 
 ### Math & Geometry (3)
 
 #### Rotate Image    
 #### Spiral Matrix
 #### Set Matrix Zeroes
+
 
 ### Bit Manipulation (5)    
 
