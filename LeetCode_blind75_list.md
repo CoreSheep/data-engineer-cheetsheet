@@ -154,7 +154,7 @@ def search(self, nums: List[int], target: int) -> int:
             else:
                 r = m - 1  # target in left half
     return -1
-    ```
+```
 
 #### 3Sum ✅
 link: https://leetcode.com/problems/3sum/<br>
@@ -225,15 +225,6 @@ def isPalindrome(self, s: str) -> bool:
 ```
 
 #### Container With Most Water ✅
-link: https://leetcode.com/problems/container-with-most-water/<br>
-solution: two pointers<br>
-space: O(1)<br>
-time: O(n)<br>
-note: use two pointers to find the maximum area<br>
-```python
-def maxArea(self, height: List[int]) -> int:
-    l, r = 0, len(height) - 1
-    max_area = 0
 #### 3Sum (also listed above)
 
 
