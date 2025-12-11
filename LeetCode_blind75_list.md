@@ -225,7 +225,13 @@ def isPalindrome(self, s: str) -> bool:
 ```
 
 #### Container With Most Water ✅
-#### 3Sum (also listed above)
+link: https://leetcode.com/problems/container-with-most-water/<br>
+solution: two pointers<br>
+space: O(1)<br>
+time: O(n)<br>
+note: use two pointers to find the maximum area, pay attention to how to move the pointers<br>
+
+#### 3Sum (also listed above) ✅
 
 
 ### Sliding Window (4) ✅
