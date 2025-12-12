@@ -5,23 +5,23 @@ The famous list from a Meta engineer, organized by pattern:
 ### Arrays & Hashing (9) ✅
 
 #### Two Sum ✅
-link: https://leetcode.com/problems/two-sum/  
-solution: hash table (seen)  
-space: O(n) - seen hash table  
-time: O(n) - one pass through the array  
+- [Two Sum](https://leetcode.com/problems/two-sum/)  
+-solution: hash table (seen)  
+- space: O(n) - seen hash table  
+- time: O(n) - one pass through the array  
 
 #### Best Time to Buy and Sell Stock ✅  
-link: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/  
-solution: two pointers (left and right) - left is the minimum price, right is the maximum price  
-space: O(1) - min_price and max_profit  
-time: O(n) - one pass through the array  
+- [Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)  
+- solution: two pointers (left and right) - left is the minimum price, right is the maximum price  
+- space: O(1) - min_price and max_profit  
+- time: O(n) - one pass through the array  
 
 #### Contains Duplicate ✅
-link: https://leetcode.com/problems/contains-duplicate/  
-solution: hash table (seen) - if the number is already in the hash table, return True  
-space: O(n) - seen hash table  
-time: O(n) - one pass through the array  
-note: use set() instead of hash table for better performance  
+- [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)  
+- solution: hash table (seen) - if the number is already in the hash table, return True  
+- space: O(n) - seen hash table  
+- time: O(n) - one pass through the array  
+- note: use set() instead of hash table for better performance  
 ```python
 seen = set()
 for num in nums:
@@ -42,14 +42,14 @@ if 2 in seen:
     print("2 is in the set")
 else:
     print("2 is not in the set")
-```s
+```
 
 #### Product of Array Except Self ✅
-link: https://leetcode.com/problems/product-of-array-except-self/  
-solution: prefix and suffix product  
-space: O(n) - answer array  
-time: O(n) - two passes through the array, prefix and suffix product  
-note: use prefix and suffix product to calculate the product of the array except self  
+- [Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/)  
+- solution: prefix and suffix product  
+- space: O(n) - answer array  
+- time: O(n) - two passes through the array, prefix and suffix product  
+- note: use prefix and suffix product to calculate the product of the array except self  
 ```python
  def productExceptSelf(self, nums: List[int]) -> List[int]:
         answer = [1] * len(nums)
@@ -67,11 +67,11 @@ note: use prefix and suffix product to calculate the product of the array except
 
 
 #### Maximum Subarray ✅
-link: https://leetcode.com/problems/maximum-subarray/  
-solution: Kadane's Algorithm (dynamic programming)  
-space: O(1) - max_sum, current_sum  
-time: O(n) - one pass through the array  
-note: use Kadane's Algorithm to check if the current sum is greater than the current number, if it is, extend the current sum, if it is not, restart the current sum.  
+- [Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)  
+- solution: Kadane's Algorithm (dynamic programming)  
+- space: O(1) - max_sum, current_sum  
+- time: O(n) - one pass through the array  
+- note: use Kadane's Algorithm to check if the current sum is greater than the current number, if it is, extend the current sum, if it is not, restart the current sum.  
 ```python
 def maxSubArray(self, nums: List[int]) -> int:
     cursum = nums[0]
@@ -84,11 +84,11 @@ def maxSubArray(self, nums: List[int]) -> int:
 ```
 
 #### Maximum Product Subarray ✅  
-link: https://leetcode.com/problems/maximum-product-subarray/  
-solution: Kadane's Algorithm (dynamic programming)  
-space: O(1) - max_product, min_product, max_product  
-time: O(n) - one pass through the array  
-note: A little different from the maximum subarray, because we need to consider the negative numbers. (save the min_product and max_product)  
+- [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)  
+- solution: Kadane's Algorithm (dynamic programming)  
+- space: O(1) - max_product, min_product, max_product  
+- time: O(n) - one pass through the array  
+- note: A little different from the maximum subarray, because we need to consider the negative numbers. (save the min_product and max_product)  
 ```python
 def maxProduct(self, nums: List[int]) -> int:
     cur_min = nums[0]
@@ -107,11 +107,11 @@ def maxProduct(self, nums: List[int]) -> int:
 
 
 #### Find Minimum in Rotated Sorted Array ✅
-link: https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/<br>
+- [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)  
 solution: binary search<br>
-space: O(1)<br>
-time: O(log n)<br>
-note: use binary search to find the minimum number in the rotated sorted array<br>
+- space: O(1)<br>
+- time: O(log n)<br>
+- note: use binary search to find the minimum number in the rotated sorted array<br>
 ```python
 def findMin(self, nums: List[int]) -> int:
     l, r = 0, len(nums) - 1
@@ -125,11 +125,11 @@ def findMin(self, nums: List[int]) -> int:
 ```
 
 #### Search in Rotated Sorted Array ✅
-link: https://leetcode.com/problems/search-in-rotated-sorted-array/<br>
+- [Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)  
 solution: binary search, find the sorted half and check if the target is in the sorted half<br>
-space: O(1)<br>
-time: O(log n)<br>
-note: use binary search to find the target number in the rotated sorted array<br>
+- space: O(1)<br>
+- time: O(log n)<br>
+- note: use binary search to find the target number in the rotated sorted array<br>
 ```python
 def search(self, nums: List[int], target: int) -> int:
     l, r = 0, len(nums) - 1
@@ -157,14 +157,13 @@ def search(self, nums: List[int], target: int) -> int:
 ```
 
 #### 3Sum ✅
-link: https://leetcode.com/problems/3sum/<br>
+- [3Sum](https://leetcode.com/problems/3sum/)  
 solution: 
     - sort the array<br>
     - fix one number and use two pointers to find the other two numbers<br>
-    - skip the duplicate numbers<br>
-space: O(1)<br>
-time: O(n^2)<br>
-note: use two pointers to find the b + c = -a<br>
+    - skip the duplicate numbers<br>  
+- time: O(n^2)<br>
+- note: use two pointers to find the b + c = -a<br>
 ```python
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
@@ -203,11 +202,11 @@ class Solution:
 ### Two Pointers (3) ✅
 
 #### Valid Palindrome ✅
-link: https://leetcode.com/problems/valid-palindrome/<br>
+- [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/)  
 solution: two pointers<br>
-space: O(1)<br>
-time: O(n)<br>
-note: use two pointers to check if the string is a palindrome from both sides<br>
+- space: O(1)<br>
+- time: O(n)<br>
+- note: use two pointers to check if the string is a palindrome from both sides<br>
 ```python
 def isPalindrome(self, s: str) -> bool:
     # 'a'.isalnum(), 'a'.isalpha(), '4'.isdigit()
@@ -225,19 +224,93 @@ def isPalindrome(self, s: str) -> bool:
 ```
 
 #### Container With Most Water ✅
-link: https://leetcode.com/problems/container-with-most-water/<br>
+- [Container With Most Water](https://leetcode.com/problems/container-with-most-water/)  
 solution: two pointers<br>
-space: O(1)<br>
-time: O(n)<br>
-note: use two pointers to find the maximum area, pay attention to how to move the pointers<br>
+- space: O(1)<br>
+- time: O(n)<br>
+- note: use two pointers to find the maximum area, pay attention to how to move the pointers<br>
 
 #### 3Sum (also listed above) ✅
 
 
 ### Sliding Window (4) ✅
+The core idea is to use a window to slide through the array, and use two pointers to keep track of the window. Move the right pointer to expand the window, and move the left pointer to shrink the window when a duplicate is found. Stop when the right pointer hits the end of the array.
 
-#### Longest Substring Without Repeating Characters
-#### Longest Repeating Character Replacement
+#### Longest Substring Without Repeating Characters ✅
+- [Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)  
+solution: sliding window<br>
+- space: O(1)<br>
+- time: O(n)<br>
+- note: use sliding window to find the longest substring without repeating characters<br>
+1. version 1: use set to store the seen letters
+```python
+def lengthOfLongestSubstring(self, s: str) -> int:
+    # sliding window
+    # Stop: when r hits the end
+    # move l when meeting a repeated letter unless no repeated letters
+    # expand right, shrink left when duplicate found
+    if len(s) == 0 or len(s) == 1:
+        return len(s)
+
+    l, r = 0, 0
+    seen = set()
+    max_len = 0
+
+    while r < len(s):
+        while s[r] in seen:
+            seen.remove(s[l])
+            l += 1
+        seen.add(s[r])
+        r += 1
+        max_len = max(max_len, r - l)
+    return max_len
+```
+
+2. version 2: cleaner version
+```python
+def lengthOfLongestSubstring(self, s: str) -> int:
+    l = 0
+    seen = {}
+    max_len = 0
+
+    for r in range(len(s)):
+        while s[r] in seen:  # found duplicate
+            seen.remove(s[l])  # shrink the left point of current window
+            l += 1
+        seen.add(s[r])  # add new char to the window
+        r += 1  # move right pointer
+        max_len = max(max_len, r - l)  # update max_len for each right pointer move
+    return max_len
+```
+
+#### Longest Repeating Character Replacement ✅
+- [Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/)  
+- solution: sliding window<br>
+- space: O(1) - count hash table<br>
+- time: O(n)<br>
+- note: when the window is valid, move the right pointer to expand the window, when the window is invalid, move the left pointer to shrink the window<br>
+```python
+def characterReplacement(self, s: str, k: int) -> int:
+    # sliding window
+    # use count to find the max_freq (the final character)
+    # if the num of characters(need to be replaced) > k, move left, update the count
+    # update the max_len
+    count = {}
+    l = 0
+    max_len = 0
+    max_freq = 0
+
+    for r in range(len(s)):
+        count[s[r]] = count.get(s[r], 0) + 1
+        max_freq = max(count[s[r]], max_freq)
+
+        # window invalid: too many characters to replace
+        while (r - l + 1) - max_freq > k:  # shrink the window
+            count[s[l]] -= 1
+            l += 1
+        max_len = max(r - l + 1, max_len)
+    return max_len
+```
 #### Minimum Window Substring
 #### Best Time to Buy and Sell Stock (revisited with window)
 
