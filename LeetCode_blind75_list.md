@@ -230,7 +230,9 @@ solution: two pointers<br>
 - time: O(n)<br>
 - note: use two pointers to find the maximum area, pay attention to how to move the pointers<br>
 
-#### 3Sum (also listed above) ✅
+#### 3Sum (also listed above) ✅ 
+- [3Sum](https://leetcode.com/problems/3sum/)  
+- solution: two pointers<br> (need to catch up later)
 
 
 ### Sliding Window (4) ✅
@@ -312,26 +314,261 @@ def characterReplacement(self, s: str, k: int) -> int:
     return max_len
 ```
 #### Minimum Window Substring
-#### Best Time to Buy and Sell Stock (revisited with window)
+- [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/)  
+- solution: sliding window<br>
+- space: O(1)<br>
+- time: O(n)<br>
+```python
+def minWindow(s: str, t: str) -> str:
+    if not t or not s:
+        return ""
+    
+    from collections import Counter
+    
+    need = Counter(t)       # chars we need
+    required = len(need)    # unique chars to satisfy
+    have = 0                # unique chars satisfied
+    
+    window = {}
+    l = 0
+    result = ""
+    min_len = float('inf')
+    
+    for r in range(len(s)):
+        # Add right char to window
+        c = s[r]
+        window[c] = window.get(c, 0) + 1
+        
+        # Check if this char is now satisfied
+        if c in need and window[c] == need[c]:
+            have += 1
+        
+        # Shrink window while valid
+        while have == required:
+            # Update result if smaller
+            if (r - l + 1) < min_len:
+                min_len = r - l + 1
+                result = s[l:r+1]
+            
+            # Remove left char
+            left_c = s[l]
+            window[left_c] -= 1
+            if left_c in need and window[left_c] < need[left_c]:
+                have -= 1
+            l += 1
+    
+    return result
+```
+
+
+#### Best Time to Buy and Sell Stock (revisited with window) ✅
+- [Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)  
+- solution: sliding window<br>
+- space: O(1)<br>
+- time: O(n)<br>
+- note: if you find a smaller buy price, update the buy price, and update the max profit<br>
+```python
+def maxProfit(self, prices: List[int]) -> int:
+    # sliding window
+    # expand and shrink
+    l = 0
+    max_profit = float('-inf')
+
+    for r in range(len(prices)):  # expand the r
+        if prices[l] < prices[r]:
+            max_profit = max(prices[r] - prices[l], max_profit)
+        else:
+            l = r  # shrink the l (when you find smaller buy day)
+    return max_profit if max_profit != float('-inf') elses 0
+```
 
 
 ### Stack (1) ✅
 
 #### Valid Parentheses
-
+- [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)  
+- solution: stack<br>
+- space: O(n)<br>
+- time: O(n)<br>
+- note: use stack to check if the parentheses are valid<br>
+```python
+    def isValid(self, s: str) -> bool:
+        # '(', '{' --> push
+        # ')' --> pop to see if they match
+        # stop: empty stack
+        parentheses_dic = {
+            '(': ')',
+            '{': '}',
+            '[': ']'
+        }
+        right_parentheses = [')', ']', '}']
+        stack = []
+        for c in s:
+            if c in parentheses_dic:  # '(', '{', '[' --> push
+                stack.append(parentheses_dic[c])
+            elif c in right_parentheses:  # ')', ']', '}' --> pop to see if they match
+                if not stack:  # if stack is empty
+                    return False
+                if stack and stack.pop() != c:  # if top stack element does not match the current parentheses
+                    return False
+        return not stack  # if there's still element in stack, return False, otherwise return True
+```
 
 ### Binary Search (2) ✅
 
-#### Find Minimum in Rotated Sorted Array
-#### Search in Rotated Sorted Array
+#### Find Minimum in Rotated Sorted Array ✅
+- [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)  
+- solution: binary search<br>
+- space: O(1)<br>
+- time: O(log n)<br>
+- note: keep m as candidate, and compare it with the end of the array to find the minimum number<br>
+```python
+def findMin(self, nums: List[int]) -> int:
+    # binary search
+    # the minimum is always on the unsorted half
+    # update l, r, m
+
+    l, r = 0, len(nums) - 1
+    minimum = float('inf')
+    while l < r:
+        m = (l + r) // 2
+        if nums[m] > nums[r]:  # go to the right unsorted half to find the minimum
+            l = m + 1
+        else:
+            r = m  # keep m as candidate when jump to the left half
+    return nums[l]
+```
+
+#### Search in Rotated Sorted Array ✅
+- [Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)  
+- solution: binary search<br>
+- space: O(1)<br>
+- time: O(log n)<br>
+- note: use binary search to find the target number in the rotated sorted array<br>
+```python
+def search(self, nums: List[int], target: int) -> int:
+    # same as find the minimum in rotated sorted array
+    # find which half is sorted half, then check if the target is in that half
+    # otherwise go check the other half
+    l, r = 0, len(nums) - 1
+
+    while l <= r:
+        m = (l + r) // 2
+
+        if nums[m] == target:
+            return m
+
+        # left half is sorted
+        if nums[l] <= nums[m]:
+            if nums[l] <= target < nums[m]:
+                r = m - 1
+            else:
+                l = m + 1
+
+        # right half is sorted
+        else:
+            if nums[m] < target <= nums[r]:
+                l = m + 1
+            else:
+                r = m - 1
+    return -1
+
+```
 
 
 ### Linked List (6) ✅
 
-#### Reverse Linked List
-#### Merge Two Sorted Lists
+#### Reverse Linked List ✅
+- [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)  
+- solution: iterative<br>
+- space: O(1)<br>
+- time: O(n)<br>
+- note: draw the linked list to understand the process<br>
+```python
+def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    pre = None
+    cur = head
+    while cur:
+        tmp = cur.next
+        cur.next = pre
+        pre = cur
+        cur = tmp
+    return pre
+```
+
+#### Merge Two Sorted Lists ✅
+- [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)  
+- solution: iterative<br>
+- space: O(1)<br>
+- time: O(n)<br><br>
+- note: use dummy node to simplify the code, two pointers moving through the lists and attach the remaining list<br>
+
+```python
+def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+    # three points + dummy node
+    dummy = ListNode(0)
+    curr = dummy
+
+    while list1 and list2:
+        if list1.val < list2.val:
+            curr.next = list1
+            list1 = list1.next
+
+        else:
+            curr.next = list2
+            list2 = list2.next
+        curr = curr.next
+
+    if list1:  # attach the remaining list
+        curr.next = list1
+    if list2:
+        curr.next = list2
+
+    return dummy.next
+```
+
+
 #### Linked List Cycle
-#### Reorder List
+#### Reorder List ✅
+- [Reorder List](https://leetcode.com/problems/reorder-list/)  
+- solution: two pointers<br>
+- space: O(1)<br>
+- time: O(n)<br>
+- note: find the middle of the list and reverse the second half, then merge the two lists<br>
+```python
+def reorderList(self, head: Optional[ListNode]) -> None:
+    """
+    Do not return anything, modify head in-place instead.
+    1. find the middle
+    2. reverse the second half
+    3. merge two half
+    """
+    # 1. find the middle
+    slow, fast = head, head
+    while fast.next and fast.next.next:
+        slow = slow.next
+        fast = fast.next.next
+    
+    # 2. reverse the second half
+    second = slow.next  # start from the second half
+    slow.next = None  # cut the first half
+    pre = None
+    cur = second
+    while cur:
+        tmp = cur.next
+        cur.next = pre
+        pre = cur
+        cur = tmp
+    
+    # 3. merge two halves
+    first, second = head, pre
+    while second:
+        tmp1, tmp2 = first.next, second.next
+        first.next = second
+        second.next = tmp1
+        first = tmp1
+        second = tmp2
+```
 #### Remove Nth Node From End of List
 #### Merge K Sorted Lists
 
@@ -341,7 +578,7 @@ def characterReplacement(self, s: str, k: int) -> int:
 #### Invert Binary Tree
 #### Maximum Depth of Binary Tree
 #### Same Tree
-#### Subtree of Another Tree
+#### Subtree of Another Tree ✅
 #### Lowest Common Ancestor of BST
 #### Binary Tree Level Order Traversal
 #### Validate Binary Search Tree
